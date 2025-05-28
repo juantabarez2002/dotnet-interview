@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: todo-sqlserver
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "Password123"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserverdata:/var/opt/mssql
+
+  api:
+    build:
+      context: .
+      dockerfile: TodoApi/Dockerfile
+    container_name: todo-api
+    depends_on:
+      - sqlserver
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__TodoContext: "Server=sqlserver,1433;Database=Todos;User Id=sa;Password=Password123;TrustServerCertificate=True;"
+    ports:
+      - "5500:80"
+
+volumes:
+  sqlserverdata:
+
