@@ -7,7 +7,7 @@ This project extends a basic REST API developed using **C# + ASP.NET** for manag
 
 Watch a step-by-step video demonstrating how to deploy and run this project:
 
-[Watch Demo Video on YouTube](youtube-video-link)
+[Watch Demo Video on YouTube](https://youtu.be/5FwAyA4VOYU)
 
 ## Prerequisites
 
