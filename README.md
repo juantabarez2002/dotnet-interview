@@ -1,40 +1,69 @@
-# dotnet-interview / TodoApi
 
-[![Open in Coder](https://dev.crunchloop.io/open-in-coder.svg)](https://dev.crunchloop.io/templates/fly-containers/workspace?param.Git%20Repository=git@github.com:crunchloop/dotnet-interview.git)
+# Jr AI Full Stack Developer Interview
 
-This is a simple Todo List API built in .NET 8. This project is currently being used for .NET full-stack candidates.
+This project extends a basic REST API developed using **C# + ASP.NET** for managing todo lists and tasks (TodoItems), integrating Model Context Protocol (MCP) to enable natural language interactions specifically designed for use with **Claude Desktop**.
 
-## Database
+## Project Demo
 
-The project comes with a devcontainer that provisions a SQL Server database. If you are not going to use the devcontainer, make sure to provision a SQL Server database and
-update the connection string.
+Watch a step-by-step video demonstrating how to deploy and run this project:
 
-## Build
+[Watch Demo Video on YouTube](youtube-video-link)
 
-To build the application:
+## Prerequisites
 
-`dotnet build`
+- Docker installed.
+- Claude Desktop installed (recommended).
 
-## Run the API
+## How to Deploy the Project
 
-To run the TodoApi in your local environment:
+Execute all commands from the project's root directory `(dotnet-interview)`.
 
-`dotnet run --project TodoApi`
+1. **Run the API and Database** using Docker Compose:
 
-## Test
+```bash
+docker-compose up -d
+```
 
-To run tests:
+2. **Build the MCP Server Image**:
 
-`dotnet test`
+```bash
+docker build -t todo-mcp ./MCPServer
+```
 
-Check integration tests at: (https://github.com/crunchloop/interview-tests)
+3. **Configure Claude Desktop** to use the MCP server:
 
-## Contact
+In Claude Desktop, add this configuration:
 
-- Martín Fernández (mfernandez@crunchloop.io)
+```json
+{
+  "mcpServers": {
+    "todo": {
+      "command": "docker",
+      "args": [
+        "run", "-i", "--rm",
+        "-e", "TODO_API_BASE=http://host.docker.internal:5500/api",
+        "todo-mcp"
+      ],
+      "env": {}
+    }
+  }
+}
+```
 
-## About Crunchloop
+## Documentation
 
-![crunchloop](https://crunchloop.io/logo-blue.png)
+- [REST API Documentation](api-documentation.md)
+- [MCP Tools Documentation](mcp-tools-documentation.md)
 
-We strongly believe in giving back :rocket:. Let's work together [`Get in touch`](https://crunchloop.io/contact).
+## Example MCP Prompts
+
+- **Create item**: "Create an item in the 'Work' list with description 'Finish report'."
+- **Update item**: "Update item 'Finish report' to 'Review final report' in 'Work' list."
+- **Complete item**: "Mark item 'Review final report' as completed in 'Work' list."
+- **Delete item**: "Delete item 'Review final report' from 'Work' list."
+
+
+## Author
+
+Juan  Tabarez   
+[LinkedIn](https://www.linkedin.com/in/juan-tabarez/) · [Email](mailto:jats2002@hotmail.com)
