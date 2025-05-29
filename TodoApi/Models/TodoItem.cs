@@ -6,6 +6,5 @@ public class TodoItem
     public required string Description { get; set; }
     public bool IsCompleted { get; set; }
     
-    public long ListId { get; set; }
-    public TodoList List { get; set; } = null!;
+    public long TodoListId { get; set; }
 }

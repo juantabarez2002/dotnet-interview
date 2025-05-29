@@ -29,7 +29,7 @@ public class TodoItemsControllerTests
             context.TodoItems.Add(new TodoItem
             {
                 Id = 1,
-                ListId = 1,
+                TodoListId = 1,
                 Description = "Task X",
                 IsCompleted = false
             });
@@ -102,7 +102,7 @@ public class TodoItemsControllerTests
             context.TodoItems.Add(new TodoItem
             {
                 Id = 2,
-                ListId = 1,
+                TodoListId = 1,
                 Description = "Description",
                 IsCompleted = false
             });
@@ -142,7 +142,7 @@ public class TodoItemsControllerTests
         context.TodoItems.Add(new TodoItem
         {
             Id = 5,
-            ListId = 1,
+            TodoListId = 1,
             Description = "Pending Task",
             IsCompleted = false
         });
@@ -179,7 +179,7 @@ public class TodoItemsControllerTests
         context.TodoItems.Add(new TodoItem
         {
             Id = 7,
-            ListId = 1,
+            TodoListId = 1,
             Description = "Task to Delete",
             IsCompleted = false
         });

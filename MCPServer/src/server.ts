@@ -9,21 +9,21 @@ const server = new McpServer({ name: "Todo", version: "1.0.0" });
 
 server.tool(
   "create_todo_item",
-  "Crea un ítem en una lista. Inputs: listId (number), description (string).",
-  { listId: z.number(), description: z.string() },
-  async ({ listId, description }) => {
-    const r = await client.post(`/todolists/${listId}/items`, { description });
+  "Crea un ítem en una lista. Inputs: todoListId (number), description (string).",
+  { todoListId: z.number(), description: z.string() },
+  async ({ todoListId, description }) => {
+    const r = await client.post(`/todolists/${todoListId}/items`, { description });
     return { content: [{ type: "text", text: JSON.stringify(r.data) }] };
   }
 );
 
 server.tool(
   "update_todo_item",
-  "Actualiza descripción de un ítem. Inputs: listId, itemId, description.",
-  { listId: z.number(), itemId: z.number(), description: z.string() },
-  async ({ listId, itemId, description }) => {
+  "Actualiza descripción de un ítem. Inputs: todoListId, itemId, description.",
+  { todoListId: z.number(), itemId: z.number(), description: z.string() },
+  async ({ todoListId, itemId, description }) => {
     const r = await client.put(
-      `/todolists/${listId}/items/${itemId}`,
+      `/todolists/${todoListId}/items/${itemId}`,
       { description }
     );
     return { content: [{ type: "text", text: JSON.stringify(r.data) }] };
@@ -32,24 +32,24 @@ server.tool(
 
 server.tool(
   "complete_todo_item",
-  "Marca ítem como completado. Inputs: listId, itemId.",
-  { listId: z.number(), itemId: z.number() },
-  async ({ listId, itemId }) => {
-    await client.patch(`/todolists/${listId}/items/${itemId}/complete`);
+  "Marca ítem como completado. Inputs: todoListId, itemId.",
+  { todoListId: z.number(), itemId: z.number() },
+  async ({ todoListId, itemId }) => {
+    await client.patch(`/todolists/${todoListId}/items/${itemId}/complete`);
     return {
-      content: [{ type: "text", text: `Ítem ${itemId} de lista ${listId} completado` }]
+      content: [{ type: "text", text: `Ítem ${itemId} de lista ${todoListId} completado` }]
     };
   }
 );
 
 server.tool(
   "delete_todo_item",
-  "Elimina un ítem. Inputs: listId, itemId.",
-  { listId: z.number(), itemId: z.number() },
-  async ({ listId, itemId }) => {
-    await client.delete(`/todolists/${listId}/items/${itemId}`);
+  "Elimina un ítem. Inputs: todoListId, itemId.",
+  { todoListId: z.number(), itemId: z.number() },
+  async ({ todoListId, itemId }) => {
+    await client.delete(`/todolists/${todoListId}/items/${itemId}`);
     return {
-      content: [{ type: "text", text: `Ítem ${itemId} de lista ${listId} eliminado` }]
+      content: [{ type: "text", text: `Ítem ${itemId} de lista ${todoListId} eliminado` }]
     };
   }
 );
@@ -57,7 +57,7 @@ server.tool(
 server.tool(
   "list_todo_lists",
   "Lista todas las listas de tareas (sin inputs).",
-  {}, 
+  {},
   async () => {
     const r = await client.get(`/todolists`);
     return { content: [{ type: "text", text: JSON.stringify(r.data) }] };
@@ -66,10 +66,10 @@ server.tool(
 
 server.tool(
   "get_todo_list",
-  "Obtiene una lista por ID. Inputs: listId (number).",
-  { listId: z.number() },
-  async ({ listId }) => {
-    const r = await client.get(`/todolists/${listId}`);
+  "Obtiene una lista por ID. Inputs: todoListId (number).",
+  { todoListId: z.number() },
+  async ({ todoListId }) => {
+    const r = await client.get(`/todolists/${todoListId}`);
     return { content: [{ type: "text", text: JSON.stringify(r.data) }] };
   }
 );
@@ -86,22 +86,22 @@ server.tool(
 
 server.tool(
   "update_todo_list",
-  "Actualiza el nombre de una lista. Inputs: listId (number), name (string).",
-  { listId: z.number(), name: z.string() },
-  async ({ listId, name }) => {
-    const r = await client.put(`/todolists/${listId}`, { name });
+  "Actualiza el nombre de una lista. Inputs: todoListId (number), name (string).",
+  { todoListId: z.number(), name: z.string() },
+  async ({ todoListId, name }) => {
+    const r = await client.put(`/todolists/${todoListId}`, { name });
     return { content: [{ type: "text", text: JSON.stringify(r.data) }] };
   }
 );
 
 server.tool(
   "delete_todo_list",
-  "Elimina una lista. Inputs: listId (number).",
-  { listId: z.number() },
-  async ({ listId }) => {
-    await client.delete(`/todolists/${listId}`);
+  "Elimina una lista. Inputs: todoListId (number).",
+  { todoListId: z.number() },
+  async ({ todoListId }) => {
+    await client.delete(`/todolists/${todoListId}`);
     return {
-      content: [{ type: "text", text: `TodoList ${listId} eliminada` }]
+      content: [{ type: "text", text: `TodoList ${todoListId} eliminada` }]
     };
   }
 );

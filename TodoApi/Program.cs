@@ -6,7 +6,11 @@ builder
         opt.UseSqlServer(builder.Configuration.GetConnectionString("TodoContext"))
     )
     .AddEndpointsApiExplorer()
-    .AddControllers();
+    .AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+    });
 
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();

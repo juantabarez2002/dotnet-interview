@@ -20,7 +20,7 @@ namespace TodoApi.Controllers
         [HttpGet("{itemId}")]
         public async Task<ActionResult<TodoItem>> GetTodoItem(long listId, long itemId)
         {
-            var item = await _context.TodoItems.FirstOrDefaultAsync(x => x.ListId == listId && x.Id == itemId);
+            var item = await _context.TodoItems.FirstOrDefaultAsync(x => x.TodoListId == listId && x.Id == itemId);
             if (item == null)
             {
                 return NotFound();
@@ -43,7 +43,7 @@ namespace TodoApi.Controllers
             {
                 Description = dto.Description,
                 IsCompleted = false,
-                ListId = listId
+                TodoListId = listId
             };
 
             _context.TodoItems.Add(item);
@@ -54,7 +54,7 @@ namespace TodoApi.Controllers
                 Id = item.Id,
                 Description = item.Description,
                 IsCompleted = item.IsCompleted,
-                ListId = listId
+                TodoListId = listId
             };
             
             return CreatedAtAction(nameof(GetTodoItem), new { listId = listId, itemId = item.Id }, resultDto);
@@ -64,7 +64,7 @@ namespace TodoApi.Controllers
         [HttpPut("{itemId}")]
         public async Task<ActionResult<TodoItem>> PutTodoItem(long listId, long itemId, UpdateTodoItem dto)
         {
-            var item = await _context.TodoItems.FirstOrDefaultAsync(x => x.ListId == listId && x.Id == itemId);
+            var item = await _context.TodoItems.FirstOrDefaultAsync(x => x.TodoListId == listId && x.Id == itemId);
             if (item == null)
             {
                 return NotFound();
@@ -80,7 +80,7 @@ namespace TodoApi.Controllers
         [HttpPatch("{itemId}/complete")]
         public async Task<IActionResult> CompleteTodoItem(long listId, long itemId)
         {
-            var item = await _context.TodoItems.FirstOrDefaultAsync(x => x.ListId == listId && x.Id == itemId);
+            var item = await _context.TodoItems.FirstOrDefaultAsync(x => x.TodoListId == listId && x.Id == itemId);
             if (item == null)
             {
                 return NotFound();
@@ -95,7 +95,7 @@ namespace TodoApi.Controllers
         [HttpDelete("{itemId}")]
         public async Task<IActionResult> DeleteTodoItem(long listId, long itemId)
         {
-            var item = await _context.TodoItems.FirstOrDefaultAsync(x => x.ListId == listId && x.Id == itemId);
+            var item = await _context.TodoItems.FirstOrDefaultAsync(x => x.TodoListId == listId && x.Id == itemId);
             if (item == null)
             {
                 return NotFound();
